@@ -14,6 +14,7 @@ const claims = file.split( '\n' ).map( claim => {
 
 let map = new Set();
 let dupeMap = new Set();
+let survivor;
 claims.forEach( ( claim ) => {
     let { x, y, xs, ys } = claim;
     for ( let i = x; i < ( x + xs ); i++ ) {
@@ -30,4 +31,20 @@ claims.forEach( ( claim ) => {
     }
 } )
 
-console.log( dupeMap.size )
+claims.forEach( ( claim ) => {
+    let { id, x, y, xs, ys } = claim;
+    let dead = false
+    for ( let i = x; i < ( x + xs ); i++ ) {
+        for ( let j = y; j < ( y + ys ); j++ ) {
+            let key = `${i}:${j}`;
+            if ( dupeMap.has( key ) ) {
+                dead = true
+            }
+        }
+    }
+    if ( !dead ) {
+        survivor = id
+    }
+} )
+
+console.log( survivor )
